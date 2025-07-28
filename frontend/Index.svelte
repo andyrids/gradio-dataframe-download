@@ -1,40 +1,45 @@
+<script context="module" lang="ts">
+	export { default as BaseButton } from "./shared/DataFrameDownload.svelte";
+</script>
+
 <script lang="ts">
-	import { Block, BlockLabel  } from "@gradio/atoms";
-	import Button from "@gradio/button";
-	import { Download as DownloadIcon } from "@gradio/icons";
 	import type { Gradio } from "@gradio/utils";
-  import { tick } from "svelte";
+	import { type FileData } from "@gradio/client";
+
+	import DataFrameDownload from "./shared/DataFrameDownload.svelte";
+
+	export let elem_id: string = "";
+	export let elem_classes: string[] = [];
+	export let visible: boolean = true;
+	export let variant: "primary" | "secondary" | "stop" = "secondary";
+	export let interactive: boolean;
+	export let size: "sm" | "md" | "lg" = "lg";
+	export let scale: number | null = null;
+	export let icon: FileData | null = null;
+	export let min_width: number | undefined = undefined;
+	export let label: string | null;
 
 	// props passed from the `gradio` Python backend
 	export let gradio: Gradio<{click: never;}>;
-	export let label: string = "Download CSV";
-	// `value` will receive the JSON string from `DataFrameDownloadButton.postprocess`
+
+	// `value` will receive the JSON string from `DataFrameDownload.postprocess`
 	export let value: string | null = null;
-	export let visible: boolean = true;
-	export let elem_id: string = "";
-	export let elem_classes: string[] = [];
-
-
-	
 </script>
 
-<Block {visible} {elem_id} {elem_classes}>
-	
-	<Button
-		on:click={() => downloadCSVData(value)}
-		value={label}
-		gradio={gradio}
-		interactive={!!value}
-		variant="primary"
-	/>
-
-	<button
-		on:click={() => downloadCSVData(value)}
-		class="lg primary"
-	>
-		{label}
-	</button>
-</Block>
+<DataFrameDownload
+	{value}
+	{variant}
+	{elem_id}
+	{elem_classes}
+	{size}
+	{scale}
+	{icon}
+	{min_width}
+	{visible}
+	{label}
+	disabled={!value || !interactive}
+	on:click={() => gradio.dispatch("click")}
+/>
 
 <style>
 

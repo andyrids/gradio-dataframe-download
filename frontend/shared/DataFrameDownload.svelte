@@ -1,20 +1,21 @@
 <script lang="ts">
+	import { createEventDispatcher } from "svelte";
 	import { type FileData } from "@gradio/client";
   import { BaseButton } from "@gradio/button";
-	import { Image } from "@gradio/image/shared";
 
 	export let elem_id = "";
 	export let elem_classes: string[] = [];
 	export let visible = true;
-	export let variant: "primary" | "secondary" | "stop" | "huggingface" = "secondary";
+	export let variant: "primary" | "secondary" | "stop" = "secondary";
 	export let size: "sm" | "md" | "lg" = "lg";
 	export let value: string | null = null;
-	export let link: string | null = null;
+	// export let link: string | null = null;
 	export let icon: FileData | null = null;
 	export let disabled = false;
 	export let scale: number | null = null;
 	export let min_width: number | undefined = undefined;
-
+	export let label: string | null ="";
+	const dispatch = createEventDispatcher();
 
   /**
 	 * Button click callback function.
@@ -37,10 +38,7 @@
 	 * @returns {Promise<void>}
 	 */
 	function downloadCSVData(csv_data: string | null): void {
-		
-		
-		
-		console.log("downloadCSVData")
+		dispatch("click")
 		if (!csv_data) {
 			console.warn("`DataFrameDownloadButton` was not sent any data");
 			return;
@@ -105,3 +103,41 @@
 		}
 	}
 </script>
+
+<BaseButton
+	{size}
+	{variant}
+	{elem_id}
+	{elem_classes}
+	{visible}
+	on:click={() => {downloadCSVData(value);}}
+	{scale}
+	{min_width}
+	{disabled}
+>
+	{#if icon}
+		<img class="button-icon" src={icon.url} alt={`${label} icon`} />
+	{:else}
+		{label}
+	{/if}
+</BaseButton>
+
+<style>
+	.button-icon {
+		width: var(--text-xl);
+		height: var(--text-xl);
+		margin-right: var(--spacing-xl);
+	}
+
+	/* svelte-ignore css-unused-selector */
+	.huggingface {
+		background: rgb(20, 28, 46);
+		color: white;
+	}
+
+	/* svelte-ignore css-unused-selector */
+	.huggingface:hover {
+		background: rgb(40, 48, 66);
+		color: white;
+	}
+</style>
