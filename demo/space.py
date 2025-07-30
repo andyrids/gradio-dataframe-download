@@ -3,7 +3,7 @@ import gradio as gr
 from app import demo as app
 import os
 
-_docs = {'DataFrameDownload': {'description': 'Download button component for client-side DataFrame download as CSV.\n\nA DataFrame is passed as `value` to this component, serialized to JSON,\nand sent to the frontend. The frontend JavaScript converts the JSON data\ninto a CSV string and triggers a download.', 'members': {'__init__': {'label': {'type': 'str', 'default': '"Download DataFrame"', 'description': None}, 'value': {'type': 'Optional[IntoFrame | Callable]', 'default': 'None', 'description': None}, 'variant': {'type': 'ButtonVariant', 'default': '"secondary"', 'description': None}, 'visible': {'type': 'bool', 'default': 'True', 'description': None}, 'size': {'type': 'Literal["sm", "md", "lg"]', 'default': '"lg"', 'description': None}, 'icon': {'type': 'Optional[str | Path]', 'default': 'None', 'description': None}, 'scale': {'type': 'Optional[int]', 'default': 'None', 'description': None}, 'min_width': {'type': 'Optional[int]', 'default': 'None', 'description': None}, 'interactive': {'type': 'bool', 'default': 'True', 'description': None}, 'elem_id': {'type': 'Optional[str]', 'default': 'None', 'description': None}, 'elem_classes': {'type': 'Optional[list[str] | str]', 'default': 'None', 'description': None}, 'render': {'type': 'bool', 'default': 'True', 'description': None}, 'return': {'type': 'None', 'description': None}}, 'postprocess': {'data': {'type': 'Optional[IntoFrame]', 'default': 'None', 'description': None}, 'value': {'type': 'Optional[IntoFrame]', 'default': 'None', 'description': None}}, 'preprocess': {'return': {'type': 'str | None', 'description': 'str | None: JSON string.'}, 'value': None}}, 'events': {'click': {'type': None, 'default': None, 'description': 'Triggered when the DataFrameDownload is clicked.'}}}, '__meta__': {'additional_interfaces': {}, 'user_fn_refs': {'DataFrameDownload': []}}}
+_docs = {'DataFrameDownload': {'description': 'Download button component for client-side DataFrame download as CSV.\n\nA DataFrame is passed as `value` to this component, serialized to JSON,\nand sent to the frontend. The frontend JavaScript converts the JSON data\ninto a CSV string and triggers a download.', 'members': {'__init__': {'label': {'type': 'str', 'default': '"Download DataFrame"', 'description': 'Component label text.'}, 'value': {'type': 'IntoFrame | Callable | None', 'default': 'None', 'description': 'A DataFrame to be serialised for download or a callable.'}, 'variant': {'type': 'Literal["primary", "secondary", "stop"]', 'default': '"secondary"', 'description': "Style variant; 'primary', 'secondary' or 'stop'."}, 'visible': {'type': 'bool', 'default': 'True', 'description': 'Component visibility flag.'}, 'size': {'type': 'Literal["sm", "md", "lg"]', 'default': '"lg"', 'description': "Size of the button; 'sm', 'md' or 'lg'."}, 'icon': {'type': 'str | Path | None', 'default': 'None', 'description': 'URL or path to the icon file to display within the button.'}, 'scale': {'type': 'int | None', 'default': 'None', 'description': 'Relative size compared to adjacent Components.'}, 'min_width': {'type': 'int | None', 'default': 'None', 'description': 'Minimum pixel width (if sufficient screen space).'}, 'interactive': {'type': 'bool', 'default': 'True', 'description': 'Component interactivity flag.'}, 'elem_id': {'type': 'str | None', 'default': 'None', 'description': 'Optional string assigned as component ID in the HTML DOM.'}, 'elem_classes': {'type': 'list[str] | str | None', 'default': 'None', 'description': 'CSS classes assigned to component in HTML DOM.'}, 'render': {'type': 'bool', 'default': 'True', 'description': '`Blocks` context render flag.'}}, 'postprocess': {'value': {'type': 'IntoFrame | None', 'default': 'None', 'description': 'A DataFrame object.'}}, 'preprocess': {'return': {'type': 'None', 'description': 'None.'}, 'value': None}}, 'events': {'click': {'type': None, 'default': None, 'description': 'Triggered when the DataFrameDownload is clicked.'}}}, '__meta__': {'additional_interfaces': {}, 'user_fn_refs': {'DataFrameDownload': []}}}
 
 abs_path = os.path.join(os.path.dirname(__file__), "css.css")
 
@@ -18,13 +18,13 @@ with gr.Blocks(
 ) as demo:
     gr.Markdown(
 """
-# `dataframe_download`
+# `gradio_dataframe_download`
 
 <div style="display: flex; gap: 7px;">
-<img alt="Static Badge" src="https://img.shields.io/badge/version%20-%200.0.1%20-%20orange">  
+<a href="https://pypi.org/project/gradio_dataframe_download/" target="_blank"><img alt="PyPI - Version" src="https://img.shields.io/pypi/v/gradio_dataframe_download"></a>  
 </div>
 
-A `gradio` component for stateless DataFrame download as a CSV.
+A `gradio` component for stateless DataFrame download as CSV.
 """, elem_classes=["md-custom"], header_links=True)
     app.render()
     gr.Markdown(
@@ -32,19 +32,13 @@ A `gradio` component for stateless DataFrame download as a CSV.
 ## Installation
 
 ```bash
-pip install dataframe_download
+pip install gradio_dataframe_download
 ```
 
 ## Usage
 
 ```python
-\"\"\"Demo app to test & demonstrate `DataFrameDownload` component.
-
-Author: Andrew Ridyard.
-
-License: GNU General Public License v3 or later.
-
-Copyright (C): 2025.
+\"\"\"Custom component demo module.
 
 Functions:
     generate_dataframe: Generate a `pandas.DataFrame` for display & download.
@@ -55,18 +49,17 @@ import gradio as gr
 import numpy as np
 from pandas import DataFrame, date_range
 
-from dataframe_download import DataFrameDownload
+from gradio_dataframe_download import DataFrameDownload
 
 
 def generate_dataframe(nrows: int) -> tuple[DataFrame, DataFrame]:
     \"\"\"Generate a `pandas.DataFrame` for display & download.
     
     Args:
-        nrows (int): Number of rows to create for the generated `DataFrame`.
+        nrows: Number of rows to generate for the DataFrame.
     
     Returns:
-        tuple[DataFrame, DataFrame]: Two DataFrame objects, which are used as
-            outputs to `gradio.DataFrame` and `DataFrameDownload`.
+        A tuple of duplicate generated DataFrame objects.
     \"\"\"
     data = {
         "ID": np.arange(nrows),
@@ -97,7 +90,7 @@ with gr.Blocks() as demo:
             generate_btn = gr.Button("Generate DataFrame", scale=1)
             download_btn = DataFrameDownload(
                 label="Download DataFrame",
-                variant="huggingface",
+                variant="primary",
                 size="lg",
                 scale=1,
             )
@@ -142,13 +135,13 @@ The impact on the users predict function varies depending on whether the compone
 
 The code snippet below is accurate in cases where the component is used as both an input and an output.
 
-- **As input:** Is passed, str | None: JSON string.
-
+- **As input:** Is passed, none.
+- **As output:** Should return, a DataFrame object.
 
  ```python
 def predict(
-    value: str | None
-) -> Optional[IntoFrame]:
+    value: None
+) -> IntoFrame | None:
     return value
 ```
 """, elem_classes=["md-custom", "DataFrameDownload-user-fn"], header_links=True)

@@ -1,2 +1,2 @@
 pandas
-dataframe_download
+gradio_dataframe_download

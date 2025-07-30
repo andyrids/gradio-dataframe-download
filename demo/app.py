@@ -1,10 +1,4 @@
-"""Demo app to test & demonstrate `DataFrameDownload` component.
-
-Author: Andrew Ridyard.
-
-License: GNU General Public License v3 or later.
-
-Copyright (C): 2025.
+"""Custom component demo module.
 
 Functions:
     generate_dataframe: Generate a `pandas.DataFrame` for display & download.
@@ -15,18 +9,17 @@ import gradio as gr
 import numpy as np
 from pandas import DataFrame, date_range
 
-from dataframe_download import DataFrameDownload
+from gradio_dataframe_download import DataFrameDownload
 
 
 def generate_dataframe(nrows: int) -> tuple[DataFrame, DataFrame]:
     """Generate a `pandas.DataFrame` for display & download.
     
     Args:
-        nrows (int): Number of rows to create for the generated `DataFrame`.
+        nrows: Number of rows to generate for the DataFrame.
     
     Returns:
-        tuple[DataFrame, DataFrame]: Two DataFrame objects, which are used as
-            outputs to `gradio.DataFrame` and `DataFrameDownload`.
+        A tuple of duplicate generated DataFrame objects.
     """
     data = {
         "ID": np.arange(nrows),
@@ -57,7 +50,7 @@ with gr.Blocks() as demo:
             generate_btn = gr.Button("Generate DataFrame", scale=1)
             download_btn = DataFrameDownload(
                 label="Download DataFrame",
-                variant="huggingface",
+                variant="primary",
                 size="lg",
                 scale=1,
             )

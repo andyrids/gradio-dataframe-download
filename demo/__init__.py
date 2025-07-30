@@ -1,2 +1,1 @@
-"""
-"""
+"""__init__ for custom component demo module."""

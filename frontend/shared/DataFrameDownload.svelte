@@ -9,7 +9,6 @@
 	export let variant: "primary" | "secondary" | "stop" = "secondary";
 	export let size: "sm" | "md" | "lg" = "lg";
 	export let value: string | null = null;
-	// export let link: string | null = null;
 	export let icon: FileData | null = null;
 	export let disabled = false;
 	export let scale: number | null = null;
@@ -18,7 +17,7 @@
 	const dispatch = createEventDispatcher();
 
   /**
-	 * Button click callback function.
+	 * Button `click` callback function.
 	 *
 	 * This function handles the entire client-side download process, by
 	 * parsing JSON into CSV and then creating a `Blob` (Binary Large Object),
@@ -127,17 +126,5 @@
 		width: var(--text-xl);
 		height: var(--text-xl);
 		margin-right: var(--spacing-xl);
-	}
-
-	/* svelte-ignore css-unused-selector */
-	.huggingface {
-		background: rgb(20, 28, 46);
-		color: white;
-	}
-
-	/* svelte-ignore css-unused-selector */
-	.huggingface:hover {
-		background: rgb(40, 48, 66);
-		color: white;
 	}
 </style>
